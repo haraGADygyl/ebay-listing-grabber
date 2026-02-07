@@ -1,0 +1,59 @@
+#!/bin/sh
+#
+# commit-msg hook — enforces Conventional Commits with required scopes.
+# Format: type(scope): description
+#
+
+commit_msg_file="$1"
+first_line=$(head -n 1 "$commit_msg_file")
+
+# Bypass validation for merge, fixup, and squash commits
+case "$first_line" in
+    Merge*|fixup!*|squash!*) exit 0 ;;
+esac
+
+# Allowed types and scopes
+types="feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert"
+scopes="scraper|video|deps|docs|config|ci|release"
+
+# Validate format: type(scope): lowercase description, no trailing period
+pattern="^($types)\(($scopes)\): [a-z].*[^.]$"
+
+if ! echo "$first_line" | grep -Eq "$pattern"; then
+    echo ""
+    echo "ERROR: Invalid commit message format."
+    echo ""
+    echo "  Got: $first_line"
+    echo ""
+    echo "  Expected: type(scope): description"
+    echo ""
+    echo "  Types:  feat fix docs style refactor perf test build ci chore revert"
+    echo "  Scopes: scraper video deps docs config ci release"
+    echo ""
+    echo "  Rules:"
+    echo "    - Description must start with a lowercase letter"
+    echo "    - No trailing period on the first line"
+    echo "    - First line must be <= 72 characters"
+    echo ""
+    echo "  Examples:"
+    echo "    feat(scraper): add support for multi-item listings"
+    echo "    fix(video): handle missing HLS stream gracefully"
+    echo "    docs(docs): update installation instructions"
+    echo ""
+    exit 1
+fi
+
+# Check line length
+line_length=$(echo "$first_line" | wc -c)
+# wc -c counts the trailing newline, so subtract 1
+line_length=$((line_length - 1))
+
+if [ "$line_length" -gt 72 ]; then
+    echo ""
+    echo "ERROR: Commit message first line is too long."
+    echo ""
+    echo "  Length: $line_length characters (max 72)"
+    echo "  Got: $first_line"
+    echo ""
+    exit 1
+fi
