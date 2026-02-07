@@ -6,6 +6,8 @@ from concurrent.futures import ThreadPoolExecutor
 import requests
 from bs4 import BeautifulSoup
 
+TARGET_URL = "https://www.ebay.com/itm/266887458583"
+
 
 def download_video_ffmpeg(m3u8_url, output_path):
     """
@@ -106,5 +108,4 @@ def download_ebay_media(url, folder_name="ebay_media"):
 
 
 if __name__ == "__main__":
-    target_url = "https://www.ebay.com/itm/266887458583"
-    download_ebay_media(target_url)
+    download_ebay_media(TARGET_URL)
