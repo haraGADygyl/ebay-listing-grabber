@@ -5,7 +5,6 @@ description = "Download images and videos from eBay listings"
 requires-python = ">= 3.12"
 license = "MIT"
 dependencies = [
-    "requests",
     "beautifulsoup4",
     "curl_cffi",
 ]
