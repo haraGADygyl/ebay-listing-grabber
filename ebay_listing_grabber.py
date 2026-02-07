@@ -3,10 +3,10 @@ import re
 import subprocess
 from concurrent.futures import ThreadPoolExecutor
 
-import requests
 from bs4 import BeautifulSoup
+from curl_cffi.requests import Session
 
-TARGET_URL = "https://www.ebay.com/itm/266887458583"
+TARGET_URL = "https://www.ebay.ie/itm/267567748247"
 
 
 def download_video_ffmpeg(m3u8_url, output_path):
@@ -42,14 +42,7 @@ def download_video_ffmpeg(m3u8_url, output_path):
 def download_ebay_media(url, folder_name="ebay_media"):
     os.makedirs(folder_name, exist_ok=True)
 
-    session = requests.Session()
-    session.headers.update(
-        {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-            "AppleWebKit/537.36 (KHTML, like Gecko) "
-            "Chrome/115.0.0.0 Safari/537.36"
-        }
-    )
+    session = Session(impersonate="chrome")
 
     print(f"Fetching listing: {url}")
     response = session.get(url)
