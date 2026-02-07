@@ -7,12 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-02-07
+
 ### Added
 
 - Project configuration with `pyproject.toml` and `uv` package management
 - Ruff linter and formatter configuration
 - `README.md` with usage instructions and documentation
 - `CLAUDE.md` for Claude Code guidance
+
+## [0.1.1] - 2026-02-07
+
+### Changed
+
+- Replaced `requests` with `curl_cffi` for Chrome TLS fingerprint impersonation to bypass eBay bot detection (503 errors)
+- Removed manual User-Agent header (handled automatically by `curl_cffi`)
 
 ## [0.1.0] - 2026-02-07
 

@@ -5,6 +5,7 @@ Download high-resolution images and videos from eBay product listings.
 ## Features
 
 - **Image extraction** — Scrapes all listing photos from the image carousel and automatically upgrades them to the highest available resolution (1600px)
+- **Bot detection bypass** — Uses `curl_cffi` with Chrome TLS fingerprint impersonation to avoid 503 blocks
 - **Video extraction** — Detects HLS video streams embedded in listing pages and downloads them as MP4
 - **Concurrent downloads** — Images are fetched in parallel using a thread pool for faster completion
 - **Deduplication** — Filters out duplicate image URLs before downloading
@@ -78,7 +79,7 @@ ebay_media/
 
 ## How It Works
 
-1. Fetches the eBay listing page HTML using a browser-like User-Agent
+1. Fetches the eBay listing page HTML using `curl_cffi` with Chrome TLS fingerprint impersonation to bypass bot detection
 2. Searches the raw page source for an HLS stream URL (`"HLS"` key in embedded JSON) and downloads it via ffmpeg
 3. Parses the HTML with BeautifulSoup, selects all `<img>` elements inside `div.ux-image-carousel`
 4. Rewrites each image URL from eBay's CDN (`i.ebayimg.com`) to request the `s-l1600` size variant

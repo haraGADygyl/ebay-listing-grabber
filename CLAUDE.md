@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Single-file eBay listing scraper (`ebay_listing_grabber.py`) that downloads images and videos from eBay product pages. Uses `requests` + `BeautifulSoup` for HTML scraping and `ffmpeg` (external) for HLS video downloads.
+Single-file eBay listing scraper (`ebay_listing_grabber.py`) that downloads images and videos from eBay product pages. Uses `curl_cffi` (with Chrome TLS fingerprint impersonation) + `BeautifulSoup` for HTML scraping and `ffmpeg` (external) for HLS video downloads.
 
 ## Commands
 
@@ -36,7 +36,7 @@ Images are upscaled to `s-l1600` resolution by rewriting the eBay CDN URL patter
 ## External Dependencies
 
 - **ffmpeg** must be installed on the system for video downloads (`sudo apt install ffmpeg`)
-- Python deps (`requests`, `beautifulsoup4`) are managed via `uv` in `pyproject.toml`
+- Python deps (`curl_cffi`, `beautifulsoup4`) are managed via `uv` in `pyproject.toml`
 
 ## Ruff Configuration
 
